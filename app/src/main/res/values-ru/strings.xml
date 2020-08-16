@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="specialty">Специальность</string>
+    <string name="first_name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="age">Возраст</string>
+    <string name="birthday">Дата рождения</string>
+    <string name="toolbar_spec">Специальности</string>
+    <string name="error">Ошибка, проверье подключение к сети</string>
+    <string name="empty_value">-</string>
+    <string name="toolbar_title_specialty">Специальности</string>
+    <string name="toolbar_title_desc_worker">Описание работника</string>
+    <string name="frag_args_null">Fragment args null</string>
+</resources>

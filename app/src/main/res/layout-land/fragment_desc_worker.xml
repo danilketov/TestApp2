@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="12dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar_circle_image_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/first_name_text_view"
+            style="@style/WorkerInfoName"
+            android:text="@string/first_name"
+            app:layout_constraintStart_toStartOf="@+id/value_first_name_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/value_first_name_text_view" />
+
+        <TextView
+            android:id="@+id/last_name_text_view"
+            style="@style/WorkerInfoName"
+            android:text="@string/last_name"
+            app:layout_constraintStart_toStartOf="@+id/value_last_name_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/value_last_name_text_view" />
+
+        <TextView
+            android:id="@+id/age_text_view"
+            style="@style/WorkerInfoName"
+            android:text="@string/age"
+            app:layout_constraintStart_toStartOf="@+id/value_age_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/value_age_text_view" />
+
+        <TextView
+            android:id="@+id/birthday_name_text_view"
+            style="@style/WorkerInfoName"
+            android:text="@string/birthday"
+            app:layout_constraintStart_toStartOf="@+id/value_birthday_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/value_birthday_text_view" />
+
+        <TextView
+            android:id="@+id/special_text_view"
+            style="@style/WorkerInfoName"
+            android:text="@string/specialty"
+            app:layout_constraintStart_toStartOf="@+id/value_special_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/value_special_text_view" />
+
+        <TextView
+            android:id="@+id/value_first_name_text_view"
+            style="@style/WorkerInfoValue"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/avatar_circle_image_view" />
+
+        <TextView
+            android:id="@+id/value_last_name_text_view"
+            style="@style/WorkerInfoValue"
+            app:layout_constraintStart_toStartOf="@+id/horizontal_line1"
+            app:layout_constraintTop_toBottomOf="@+id/horizontal_line1" />
+
+        <TextView
+            android:id="@+id/value_age_text_view"
+            style="@style/WorkerInfoValue"
+            app:layout_constraintStart_toStartOf="@+id/horizontal_line2"
+            app:layout_constraintTop_toBottomOf="@+id/horizontal_line2" />
+
+        <TextView
+            android:id="@+id/value_birthday_text_view"
+            style="@style/WorkerInfoValue"
+            app:layout_constraintStart_toStartOf="@+id/horizontal_line3"
+            app:layout_constraintTop_toBottomOf="@+id/horizontal_line3" />
+
+        <TextView
+            android:id="@+id/value_special_text_view"
+            style="@style/WorkerInfoValue"
+            app:layout_constraintStart_toStartOf="@+id/horizontal_line4"
+            app:layout_constraintTop_toBottomOf="@+id/horizontal_line4" />
+
+        <View
+            android:id="@+id/horizontal_line1"
+            style="@style/Line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/first_name_text_view" />
+
+        <View
+            android:id="@+id/horizontal_line2"
+            style="@style/Line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/last_name_text_view" />
+
+        <View
+            android:id="@+id/horizontal_line3"
+            style="@style/Line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/age_text_view" />
+
+        <View
+            android:id="@+id/horizontal_line4"
+            style="@style/Line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/birthday_name_text_view" />
+
+        <View
+            android:id="@+id/horizontal_line5"
+            style="@style/Line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/special_text_view" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
