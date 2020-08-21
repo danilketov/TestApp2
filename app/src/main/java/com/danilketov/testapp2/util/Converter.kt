@@ -79,14 +79,12 @@ class Converter {
         }
 
         // Отображение фото работника
-        fun getAvatarWorker(avatarUrl: String?, worker: Worker): String? {
+        fun getAvatarWorker(avatarUrl: String?, worker: Worker?): String? {
             return if (avatarUrl == null || avatarUrl == "") {
                 java.lang.String.valueOf(R.drawable.no_avatar)
             } else {
-                worker.avatarUrl
+                worker?.avatarUrl
             }
         }
     }
-
-
 }

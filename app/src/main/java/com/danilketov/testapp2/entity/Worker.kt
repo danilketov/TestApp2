@@ -3,7 +3,7 @@ package com.danilketov.testapp2.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.danilketov.testapp2.util.CustomTypeConverter
+import com.danilketov.testapp2.db.CustomTypeConverter
 import com.google.gson.annotations.SerializedName
 
 @Entity

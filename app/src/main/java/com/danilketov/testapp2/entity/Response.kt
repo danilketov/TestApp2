@@ -5,5 +5,5 @@ import java.util.*
 
 data class Response(
     @SerializedName("response")
-    private val response: ArrayList<Worker>? = null
+    val response: ArrayList<Worker>? = null
 )

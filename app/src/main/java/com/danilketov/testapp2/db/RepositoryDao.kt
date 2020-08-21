@@ -12,10 +12,10 @@ import java.util.*
 interface RepositoryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertWorkers(workers: ArrayList<Worker>)
+    fun insertWorkers(workers: ArrayList<Worker>?)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSpecialties(specialties: ArrayList<Specialty>)
+    fun insertSpecialties(specialties: ArrayList<Specialty>?)
 
     @Query("DELETE FROM Worker")
     fun deleteWorkers()

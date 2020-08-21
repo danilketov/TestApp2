@@ -1,10 +1,10 @@
 package com.danilketov.testapp2.util
 
-class Parameters {
-    private val lastName: String? = null
-    private val firstName: String? = null
-    private val age: String? = null
-    private val birthday: String? = null
-    private val avatar: String? = null
-    private val specialtyJSON: String? = null
-}
+class Parameters(
+    val lastName: String?,
+    val firstName: String?,
+    val age: String?,
+    val birthday: String?,
+    val avatar: String?,
+    val specialtyJSON: String?
+)

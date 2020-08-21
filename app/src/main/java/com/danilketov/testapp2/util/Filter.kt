@@ -10,7 +10,10 @@ class Filter {
 
     companion object {
         // Фильтр отображения работников по выбранным специальностям
-        fun getFilteredWorkers(result: ArrayList<Worker>?, nameSpecialty: String?): ArrayList<Worker> {
+        fun getFilteredWorkers(
+            result: ArrayList<Worker>?,
+            nameSpecialty: String?
+        ): ArrayList<Worker> {
             val i: MutableIterator<Worker> = result!!.iterator()
             while (i.hasNext()) {
                 val worker: Worker = i.next()
@@ -46,10 +49,7 @@ class Filter {
         }
 
         // Выборка уникальных элементов для списка "Специальности"
-        fun addUniqueItems(
-            items: List<Specialty?>,
-            specialties: MutableList<Specialty?>
-        ) {
+        fun addUniqueItems(items: List<Specialty>, specialties: MutableList<Specialty>) {
             for (specialty in items) {
                 if (!specialties.contains(specialty)) {
                     specialties.add(specialty)
