@@ -5,8 +5,8 @@ import com.danilketov.testapp2.entity.Worker
 
 class WorkerDiffUtilCallback(
     private var oldList: List<Worker>,
-    private var newList: List<Worker>) : DiffUtil.Callback() {
-
+    private var newList: List<Worker>
+) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
         return oldList.size

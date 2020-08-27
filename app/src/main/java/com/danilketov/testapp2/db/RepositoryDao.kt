@@ -6,16 +6,15 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.danilketov.testapp2.entity.Specialty
 import com.danilketov.testapp2.entity.Worker
-import java.util.*
 
 @Dao
 interface RepositoryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertWorkers(workers: ArrayList<Worker>?)
+    fun insertWorkers(workers: List<Worker>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSpecialties(specialties: ArrayList<Specialty>?)
+    fun insertSpecialties(specialties: List<Specialty>)
 
     @Query("DELETE FROM Worker")
     fun deleteWorkers()

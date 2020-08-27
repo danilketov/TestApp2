@@ -12,16 +12,16 @@ import com.danilketov.testapp2.util.WorkerDiffUtilCallback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_view_worker.view.*
 
-class WorkerAdapter(listener: OnInfoWorkerClickListener) : RecyclerView.Adapter<WorkerAdapter.WorkerViewHolder>() {
+class WorkerAdapter(listener: OnInfoWorkerClickListener) :
+    RecyclerView.Adapter<WorkerAdapter.WorkerViewHolder>() {
 
     var workers = arrayListOf<Worker>()
         set(value) {
             field = value
-            notifyDataSetChanged() // попробуй применить checkUpdateItems
+            notifyDataSetChanged()
         }
 
-    private val onInfoWorkerClickListener: OnInfoWorkerClickListener? = null
-
+    private val onInfoWorkerClickListener: OnInfoWorkerClickListener? = listener
 
     interface OnInfoWorkerClickListener {
         fun onInfoWorkerClick(worker: Worker?)
@@ -45,10 +45,10 @@ class WorkerAdapter(listener: OnInfoWorkerClickListener) : RecyclerView.Adapter<
     }
 
     private fun checkUpdateItems(items: List<Worker>) {
-        val diffCallback = WorkerDiffUtilCallback(this.workers, workers)
+        val diffCallback = WorkerDiffUtilCallback(this.workers, items)
         val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
         this.workers.clear()
-        workers.addAll(workers)
+        workers.addAll(items)
         diffResult.dispatchUpdatesTo(this)
     }
 
@@ -60,20 +60,19 @@ class WorkerAdapter(listener: OnInfoWorkerClickListener) : RecyclerView.Adapter<
         private val avatarImageView = itemView.avatar_circle_image_view
 
         init {
-            itemView.setOnClickListener(View.OnClickListener {
-                val adapterPos = adapterPosition
-                if (adapterPos != RecyclerView.NO_POSITION) {
-                    val worker = workers[adapterPos]
+            itemView.setOnClickListener {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    val worker = workers[adapterPosition]
                     onInfoWorkerClickListener?.onInfoWorkerClick(worker)
                 }
-            })
+            }
         }
 
         fun bind(worker: Worker) {
             with(Converter) {
                 firstNameTextView.text = getFormattedString(worker.firstName)
                 lastNameTextView.text = getFormattedString(worker.lastName)
-                ageTextView.text = getFormattedString(worker.birthday)
+                ageTextView.text = getFormattedAge(worker.birthday)
 
                 val avatarUrl = worker.avatarUrl
                 Picasso.get()

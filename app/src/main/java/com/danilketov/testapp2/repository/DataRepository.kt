@@ -10,19 +10,19 @@ class DataRepository {
 
     private var db: AppDatabase? = App.getAppDatabase()
 
-    fun getWorkers(workers: ArrayList<Worker>?): ArrayList<Worker> {
-        var workers: ArrayList<Worker>? = workers
-        db?.repositoryDao()?.deleteWorkers()
-        db?.repositoryDao()?.insertWorkers(workers)
-        workers = db?.repositoryDao()?.getWorkers() as ArrayList<Worker>
-        return workers
+    fun getWorkers(workers: ArrayList<Worker>?): ArrayList<Worker>? {
+        workers?.let {
+            db?.repositoryDao()?.deleteWorkers()
+            db?.repositoryDao()?.insertWorkers(it)
+        }
+        return db?.repositoryDao()?.getWorkers() as ArrayList<Worker>?
     }
 
     fun getSpecialties(specialties: ArrayList<Specialty>?): ArrayList<Specialty>? {
-        var specialties: ArrayList<Specialty>? = specialties
-        db?.repositoryDao()?.deleteSpecialties()
-        db?.repositoryDao()?.insertSpecialties(specialties)
-        specialties = db?.repositoryDao()?.getSpecialties() as ArrayList<Specialty>
-        return specialties
+        specialties?.let {
+            db?.repositoryDao()?.deleteSpecialties()
+            db?.repositoryDao()?.insertSpecialties(it)
+        }
+        return db?.repositoryDao()?.getSpecialties() as ArrayList<Specialty>?
     }
 }

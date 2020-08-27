@@ -20,7 +20,6 @@ import com.danilketov.testapp2.util.Parameters
 import com.danilketov.testapp2.viewmodel.WorkerViewModel
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_worker.*
-import java.util.*
 
 class WorkerFragment : Fragment() {
 
@@ -32,34 +31,52 @@ class WorkerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        setSettingsToolbar()
-        initRecyclerView()
-        getNameSpecialty()
-
-        viewModel = ViewModelProviders.of(this)[WorkerViewModel::class.java]
-        viewModel.getWorkers()
-            .observe(this,
-                Observer<ArrayList<Worker>> { workers ->
-                    var workers = workers
-                    if (workers != null && getNameSpecialty() != null) {
-                        workers = Filter.getFilteredWorkers(workers, getNameSpecialty())
-                        adapter!!.addItems(workers)
-                    } else {
-                        Toast.makeText(activity, R.string.error, Toast.LENGTH_SHORT).show()
-                    }
-                })
-
         return inflater.inflate(R.layout.fragment_worker, container, false)
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setSettingsToolbar()
+        initRecyclerView()
+        getNameSpecialty()
+        setViewModel()
+    }
+
+    private fun setViewModel() {
+        viewModel = ViewModelProviders.of(this)[WorkerViewModel::class.java]
+        viewModel.getWorkers()
+            .observe(this, Observer {
+                var workers = it
+                if (workers != null && getNameSpecialty() != null) {
+                    workers = Filter.getFilteredWorkers(workers, getNameSpecialty())
+                    adapter?.addItems(workers)
+                } else {
+                    Toast.makeText(activity, R.string.error, Toast.LENGTH_SHORT).show()
+                }
+            })
+        viewModel.loadData()
+
+        viewModel.isLoading().observe(this, Observer {
+            progress_bar.visibility = if (it) View.VISIBLE else View.GONE
+        })
+        viewModel.isNetworkException().observe(this, Observer {
+            if (it != null) {
+                Toast.makeText(activity, R.string.error, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
     private fun setSettingsToolbar() {
-        (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (activity as AppCompatActivity?)?.supportActionBar?.setDisplayShowHomeEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
+        setToolbarTitle(getNameSpecialty())
     }
 
     private fun initRecyclerView() {
         worker_recycler_view?.layoutManager = LinearLayoutManager(activity)
+        worker_recycler_view.itemAnimator = null
         val listener: WorkerAdapter.OnInfoWorkerClickListener =
             object : WorkerAdapter.OnInfoWorkerClickListener {
                 override fun onInfoWorkerClick(worker: Worker?) {
@@ -69,9 +86,10 @@ class WorkerFragment : Fragment() {
                     val birthday: String? = Converter.getFormattedBirthday(worker?.birthday)
                     val avatar: String? = Converter.getAvatarWorker(worker?.avatarUrl, worker)
                     val specialtyJSON = Gson().toJson(worker?.specialty)
-                    activity?.supportFragmentManager
-                        ?.beginTransaction()
-                        ?.replace(
+
+                    requireFragmentManager()
+                        .beginTransaction()
+                        .replace(
                             R.id.fragment_container, DescWorkerFragment()
                                 .newInstance(
                                     Parameters(
@@ -84,12 +102,11 @@ class WorkerFragment : Fragment() {
                                     )
                                 )!!
                         )
-                        ?.addToBackStack(null)
-                        ?.commit()
-
+                        .addToBackStack(null)
+                        .commit()
                 }
             }
-        val adapter = WorkerAdapter(listener)
+        adapter = WorkerAdapter(listener)
         worker_recycler_view?.adapter = adapter
     }
 
@@ -98,11 +115,15 @@ class WorkerFragment : Fragment() {
         var nameSpecialty: String? = null
         if (args != null) {
             nameSpecialty = args.getString(Const.KEY_WORKER_SPECIALTY)
-            (activity as AppCompatActivity?)!!.supportActionBar?.title = nameSpecialty
+            setToolbarTitle(nameSpecialty)
         } else {
             Toast.makeText(activity, R.string.frag_args_null, Toast.LENGTH_SHORT).show()
         }
         return nameSpecialty
+    }
+
+    private fun setToolbarTitle(title: String?) {
+        (activity as AppCompatActivity).supportActionBar?.title = title
     }
 
     fun newInstance(specialty: String?): Fragment? {

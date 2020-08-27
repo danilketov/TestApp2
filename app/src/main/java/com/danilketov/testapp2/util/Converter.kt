@@ -19,8 +19,8 @@ class Converter {
                     SimpleDateFormat("yyyy-mm-dd", Locale.getDefault())
                 val inputFormat2: DateFormat =
                     SimpleDateFormat("dd-mm-yyyy", Locale.getDefault())
-                val date1: Date
-                val date2: Date
+                val date1: Date?
+                val date2: Date?
                 val outputFormat: DateFormat =
                     SimpleDateFormat("dd.mm.yyyy", Locale.getDefault())
                 try {
@@ -43,7 +43,7 @@ class Converter {
             return null
         }
 
-        //Преобразование возраста из дня рождения
+        // Преобразование возраста из дня рождения
         fun getFormattedAge(birthdayString: String?): String {
             return if (birthdayString == null || birthdayString == "") {
                 "-"

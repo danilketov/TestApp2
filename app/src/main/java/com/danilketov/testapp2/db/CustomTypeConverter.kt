@@ -14,7 +14,7 @@ class CustomTypeConverter {
     }
 
     @TypeConverter
-    fun stringToListServer(data: String?): List<Specialty?>? {
+    fun stringToListServer(data: String?): List<Specialty?> {
         if (data == null) {
             return Collections.emptyList()
         }
@@ -24,7 +24,7 @@ class CustomTypeConverter {
     }
 
     @TypeConverter
-    fun listServerToString(someObjects: List<Specialty?>?): String? {
+    fun listServerToString(someObjects: List<Specialty?>): String? {
         return gson.toJson(someObjects)
     }
 }

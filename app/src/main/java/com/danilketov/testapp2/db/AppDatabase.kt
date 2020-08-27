@@ -11,7 +11,7 @@ import com.danilketov.testapp2.entity.Worker
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        val DB_NAME: String? = "workers_db"
+        const val DB_NAME: String = "workers_db"
     }
 
     abstract fun repositoryDao(): RepositoryDao

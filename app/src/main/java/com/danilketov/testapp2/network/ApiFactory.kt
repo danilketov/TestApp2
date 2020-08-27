@@ -8,13 +8,12 @@ object ApiFactory {
 
     private const val BASE_URL = "https://gitlab.65apps.com/"
     private var apiFactory: ApiFactory? = null
-
-
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .baseUrl(BASE_URL)
         .build()
+    val getApiService = retrofit.create(ApiService::class.java)
 
     fun getInstance(): ApiFactory? {
         if (apiFactory == null) {
@@ -22,6 +21,4 @@ object ApiFactory {
         }
         return apiFactory
     }
-
-    val getApiService = retrofit.create(ApiService::class.java)
 }

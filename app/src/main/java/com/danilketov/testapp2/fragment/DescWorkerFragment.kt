@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -14,6 +12,7 @@ import com.danilketov.testapp2.util.Const
 import com.danilketov.testapp2.util.Filter
 import com.danilketov.testapp2.util.Parameters
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_desc_worker.*
 
 class DescWorkerFragment : Fragment() {
 
@@ -22,11 +21,21 @@ class DescWorkerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.fragment_desc_worker, container, false)
+    }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         setSettingsToolbar()
         getSetData()
+    }
 
-        return inflater.inflate(R.layout.fragment_desc_worker, container, false)
+    private fun setSettingsToolbar() {
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            setTitle(R.string.toolbar_title_desc_worker)
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
     }
 
     private fun getSetData() {
@@ -40,24 +49,17 @@ class DescWorkerFragment : Fragment() {
             val specialtyJSON = args.getString(Const.KEY_SPECIALTY_JSON)
             val specialtyText: String = Filter.getSpecialtyText(specialtyJSON)
 
-            val valueLastNameTextView: TextView = R.id.value_last_name_text_view as TextView
-            val valueFirstNameTextView: TextView = R.id.value_first_name_text_view as TextView
-            val valueAgeTextView: TextView = R.id.value_age_text_view as TextView
-            val valueBirthdayTextView: TextView = R.id.value_birthday_text_view as TextView
-            val valueSpecialTextView: TextView = R.id.value_special_text_view as TextView
-            val avatarCircleImageView: ImageView = R.id.avatar_circle_image_view as ImageView
-
-            valueLastNameTextView.text = lastName
-            valueFirstNameTextView.text = firstName
-            valueAgeTextView.text = age
-            valueBirthdayTextView.text = birthday
-            valueSpecialTextView.text = specialtyText
+            value_last_name_text_view.text = lastName
+            value_first_name_text_view.text = firstName
+            value_age_text_view.text = age
+            value_birthday_text_view.text = birthday
+            value_special_text_view.text = specialtyText
 
             Picasso.get()
                 .load(avatar)
                 .fit()
                 .placeholder(R.drawable.no_avatar)
-                .into(avatarCircleImageView)
+                .into(avatar_circle_image_view)
         } else {
             Toast.makeText(activity, R.string.frag_args_null, Toast.LENGTH_SHORT).show()
         }
@@ -74,11 +76,5 @@ class DescWorkerFragment : Fragment() {
         val fragment = DescWorkerFragment()
         fragment.arguments = args
         return fragment
-    }
-
-    private fun setSettingsToolbar() {
-        (activity as AppCompatActivity?)?.supportActionBar?.setTitle(R.string.toolbar_title_desc_worker)
-        (activity as AppCompatActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (activity as AppCompatActivity?)?.supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 }

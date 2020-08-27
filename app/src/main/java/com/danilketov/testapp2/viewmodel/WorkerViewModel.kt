@@ -1,5 +1,6 @@
 package com.danilketov.testapp2.viewmodel
 
+import android.annotation.SuppressLint
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import com.danilketov.testapp2.App
 import com.danilketov.testapp2.entity.Worker
 import com.danilketov.testapp2.network.ApiFactory
-import com.danilketov.testapp2.repository.DataRepository
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -15,18 +15,12 @@ import java.util.*
 
 class WorkerViewModel : ViewModel() {
 
-    private val dataRepository: DataRepository? = App.getDataRepository()
-
+    private val dataRepository = App.getDataRepository()
     private val workers: MutableLiveData<ArrayList<Worker>> =
-        MutableLiveData<ArrayList<Worker>>()
-    private val isNetworkException =
-        MutableLiveData<Boolean>()
+        MutableLiveData()
+    private val isNetworkException = MutableLiveData<Boolean>()
     private val isLoading = MutableLiveData<Boolean>()
     private var disposable: Disposable? = null
-
-    init {
-        loadData()
-    }
 
     fun getWorkers(): LiveData<ArrayList<Worker>> {
         return workers
@@ -44,6 +38,7 @@ class WorkerViewModel : ViewModel() {
         GetWorkersAsyncTask().execute(workers)
     }
 
+    @SuppressLint("StaticFieldLeak")
     inner class GetWorkersAsyncTask :
         AsyncTask<ArrayList<Worker>, Void, ArrayList<Worker>>() {
 
@@ -51,7 +46,7 @@ class WorkerViewModel : ViewModel() {
             isLoading.value = true
         }
 
-        override fun doInBackground(vararg params: ArrayList<Worker>?): ArrayList<Worker>? {
+        override fun doInBackground(vararg params: ArrayList<Worker>): ArrayList<Worker>? {
             return try {
                 workers.postValue(dataRepository?.getWorkers(params[0]))
                 workers.value
@@ -66,15 +61,18 @@ class WorkerViewModel : ViewModel() {
         }
     }
 
-    private fun loadData() {
+    fun loadData() {
         insertWorkers(null)
         val apiFactory = ApiFactory.getInstance()
         val apiService = apiFactory?.getApiService
         disposable = apiService?.getResponse()
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe({ response -> insertWorkers(response.response) },
-                { throwable -> isNetworkException.setValue(true) })
+            ?.subscribe({ response ->
+                insertWorkers(response.response)
+            }, {
+                isNetworkException.setValue(true)
+            })
     }
 
     override fun onCleared() {

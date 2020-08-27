@@ -11,15 +11,16 @@ import com.danilketov.testapp2.util.Filter
 import com.danilketov.testapp2.util.SpecialtyDiffUtilCallback
 import kotlinx.android.synthetic.main.item_view_special.view.*
 
-class SpecialtyAdapter(listener: OnInfoSpecialClickListener) : RecyclerView.Adapter<SpecialtyAdapter.SpecialViewHolder>() {
+class SpecialtyAdapter(listener: OnInfoSpecialClickListener) :
+    RecyclerView.Adapter<SpecialtyAdapter.SpecialViewHolder>() {
 
     var specialties = arrayListOf<Specialty>()
         set(value) {
             field = value
-            notifyDataSetChanged() // попробуй применить checkUpdateItems
+            notifyDataSetChanged()
         }
 
-    private val onInfoSpecialClickListener: OnInfoSpecialClickListener? = null
+    private val onInfoSpecialClickListener: OnInfoSpecialClickListener? = listener
 
     interface OnInfoSpecialClickListener {
         fun onInfoSpecialClick(specialty: Specialty?)
@@ -43,7 +44,7 @@ class SpecialtyAdapter(listener: OnInfoSpecialClickListener) : RecyclerView.Adap
     }
 
     private fun checkUpdateItems(items: List<Specialty>) {
-        val diffCallback = SpecialtyDiffUtilCallback(this.specialties, specialties)
+        val diffCallback = SpecialtyDiffUtilCallback(this.specialties, items)
         val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffCallback)
         this.specialties.clear()
         Filter.addUniqueItems(items, specialties)
@@ -55,13 +56,12 @@ class SpecialtyAdapter(listener: OnInfoSpecialClickListener) : RecyclerView.Adap
         private val specialtyTextView = itemView.specialty_text_view
 
         init {
-            itemView.setOnClickListener(View.OnClickListener {
-                val adapterPos = adapterPosition
-                if (adapterPos!= RecyclerView.NO_POSITION) run {
-                    val specialty = specialties[adapterPos]
+            itemView.setOnClickListener {
+                if (adapterPosition != RecyclerView.NO_POSITION) run {
+                    val specialty = specialties[adapterPosition]
                     onInfoSpecialClickListener?.onInfoSpecialClick(specialty)
                 }
-            })
+            }
         }
 
         fun bind(specialty: Specialty) {

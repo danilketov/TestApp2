@@ -5,7 +5,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.danilketov.testapp2.R
 import com.danilketov.testapp2.fragment.SpecialtyFragment
-import com.danilketov.testapp2.fragment.WorkerFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

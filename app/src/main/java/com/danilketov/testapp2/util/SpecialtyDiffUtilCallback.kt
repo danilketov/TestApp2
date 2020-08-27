@@ -5,7 +5,8 @@ import com.danilketov.testapp2.entity.Specialty
 
 class SpecialtyDiffUtilCallback(
     private var oldList: List<Specialty>,
-    private var newList: List<Specialty>) : DiffUtil.Callback() {
+    private var newList: List<Specialty>
+) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
         return oldList.size

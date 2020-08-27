@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
 @Entity
 data class Worker(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = 0,
+    val id: Int? = null,
 
     @SerializedName("f_name")
     val firstName: String? = null,
